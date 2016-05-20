@@ -232,6 +232,13 @@ var SelectPickerMixin = Ember.Mixin.create({
     }
   },
 
+  sendChangeAction: function() {
+    const changeAction = Ember.get(this, 'attrs.action');
+    if (changeAction) {
+      changeAction(this.get('selection'));
+    }
+  },
+
   actions: {
     selectItem: function(selected) {
       if (!this.get('disabled')) {
@@ -242,6 +249,7 @@ var SelectPickerMixin = Ember.Mixin.create({
           this.set('selection', selected.get('item'));
         }
       }
+      this.sendChangeAction();
       return false;
     },
 
